@@ -33,6 +33,7 @@ final class AuthorController extends AbstractController
       $author=new Author();
       $author->setEmail('foulen@esprit.tn');
       $author->setUsername('foulen');
+      $author->setNbBooks(0);
       $em=$doctrine->getManager();
       $em->persist($author);
       $em->flush();

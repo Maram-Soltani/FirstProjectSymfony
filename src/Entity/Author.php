@@ -21,6 +21,24 @@ class Author
     #[ORM\Column]
     private ?string $email = null;
 
+    #[ORM\Column(type: 'integer')]
+    private ?int $nb_books=0;
+
+    // Relation OneToMany avec Book
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Book::class, cascade: ['remove'], orphanRemoval: true)]
+    private $books;
+    public function __construct()
+    {
+        $this->books = new ArrayCollection();
+    }
+
+    /** @return Collection|Book[] */
+    public function getBooks(): Collection
+    {
+        return $this->books;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -56,4 +74,18 @@ class Author
 
         return $this;
     }
+
+    public function getNbBooks(): ?int
+    {
+       return $this->nb_books;
+    }
+
+    public function setNbBooks(int $nb_books): self
+    {
+        $this->nb_books = $nb_books;
+        return $this;
+    }
+
+    
+
 }
