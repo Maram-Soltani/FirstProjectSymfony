@@ -24,4 +24,12 @@ final class ServiceController extends AbstractController
     ]);
 }
 
+
+    #[Route('/go-to-index', name: 'go_to_index')]
+public function goToIndex(): Response
+{
+    // Redirection vers la route 'app_home' définie dans HomeController::index()
+    return $this->redirectToRoute('app_home');
+}
+
 }
