@@ -16,11 +16,11 @@ class AuthorType extends AbstractType
     {
         $builder
             ->add('username', TextType::class)
-            
+
             ->add('email', EmailType::class)
 
             ->add('save', SubmitType::class, [
-        'label' => 'Enregistrer',
+        'label' => 'save',
         'attr' => ['class' => 'btn btn-primary mt-2']
     ]);
     }

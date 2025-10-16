@@ -77,4 +77,19 @@ final class AuthorController extends AbstractController
        $author=$repo->find($id);
        return $this->render('author/showDetails.html.twig',['author'=>$author]);
     }
+
+    /*#[Route('/ShowAllAuthorsQB',name:'ShowAllAuthorsQB')]
+    public function ShowAllAuthorsQB(AuthorRepository $repo){
+       $author=$repo->ShowAllAuthorsQB();
+       return $this->render('author/showAll.html.twig',['list'=>$author]);
+    }*/
+
+       #[Route('/ShowAllAuthorsQB', name: 'ShowAllAuthorsQB')]
+public function ShowAllAuthorsQB(AuthorRepository $repo): Response
+{
+    $authors = $repo->ShowAllAuthorsQB(); // ta méthode du repository
+    return $this->render('author/showAll.html.twig', [
+        'list' => $authors,
+    ]);
+}
 }

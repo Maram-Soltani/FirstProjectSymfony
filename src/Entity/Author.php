@@ -86,6 +86,25 @@ class Author
         return $this;
     }
 
-    
+     // Ajout d’un livre à l’auteur
+    public function addBook(Book $book): self
+    {
+        if (!$this->books->contains($book)) {
+            $this->books->add($book);
+            $book->setAuthor($this);
+        }
+        return $this;
+    }
+
+    // Retrait d’un livre
+    public function removeBook(Book $book): self
+    {
+        if ($this->books->removeElement($book)) {
+            if ($book->getAuthor() === $this) {
+                $book->setAuthor(null);
+            }
+        }
+        return $this;
+    }
 
 }

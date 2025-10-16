@@ -33,20 +33,27 @@ public function add(Request $request, ManagerRegistry $doctrine): Response
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-        // Incrémentation nb_books de l'auteur
+        $em = $doctrine->getManager();
+
+        // Récupération de l'auteur sélectionné
         $author = $book->getAuthor();
+
+        // Incrémentation nb_books
         $author->setNbBooks($author->getNbBooks() + 1);
 
-        $em = $doctrine->getManager();
-        $em->persist($book);
+        // Ajout du livre à la collection de l'auteur (relation bidirectionnelle)
+        $author->addBook($book);
+
+        // Persistance
+        $em->persist($book);  // le $author sera mis à jour automatiquement
         $em->flush();
 
-        $this->addFlash('success', 'Book ajouté avec succès !');
+        $this->addFlash('success', 'Livre ajouté avec succès !');
 
-        // Redirection vers la liste des livres
-        return $this->redirectToRoute('add');
+        // Redirection vers la liste des livres (remplacez 'book_index' par votre route réelle)
+        return $this->redirectToRoute('book_index');
     }
-
+    
     return $this->render('book/add.html.twig', [
         'form' => $form->createView(),
     ]);
