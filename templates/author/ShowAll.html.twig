@@ -1,25 +1,19 @@
 <h1>Liste des auteurs</h1>
-<table border="1" cellpadding="15" cellspacing="5">
-
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>email</th>
-                <th>Action</th>
-            </tr>
-
-            {% for i in list %}
-                <tr>
-                    <td>{{ i.id }}</td>
-                    <td>{{ i.Username }}</td>
-                    <td>{{ i.email }}</td>
-                    <td><a href="{{ path('delectAuthors', {'id': i.id}) }}">delete</a></td>
-                    <td><a href="{{ path('delectAuthors', {'id': i.id}) }}">Show</a></td>
-                    <td><a href="{{ path('delectAuthors', {'id': i.id}) }}">delete</a></td>
-
-                </tr>
-
-                
-
-            {% endfor %}
+<table>
+<tr>
+  <td>Username</td>
+  <td>Email</td>
+  <td>Actions</td>
+</tr>
+{% for i in list %}
+<tr>
+ <td>{{i.username}}</td>
+ <td>{{i.email}}</td>
+ <td>
+ <a href="{{path('deleteAuthor',{'id':i.id})}}">Delete</a> {#or URL #}
+ <a href="{{path('showDetails',{'id':i.id})}}">Show</a>
+ <a href="">Update</a>
+</td>
+</tr>
+{% endfor %}
 </table>
