@@ -15,4 +15,13 @@ final class ServiceController extends AbstractController
             'controller_name' => 'ServiceController',
         ]);
     }
+
+    #[Route('/service/show/{name}', name: 'show_service')]
+    public function showService(string $name): Response
+    {
+    return $this->render('service/show.html.twig', [
+        'name' => $name,
+    ]);
+}
+
 }
