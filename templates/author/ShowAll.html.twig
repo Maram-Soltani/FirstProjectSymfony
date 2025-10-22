@@ -1,19 +1,102 @@
 <h1>Liste des auteurs</h1>
+
+<style>
+    body {
+        background-color: #fdfaff; /* fond lavande très clair */
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        padding: 40px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #9370db; /* violet lavande */
+        font-weight: 600;
+        margin-bottom: 35px;
+    }
+
+    table {
+        width: 80%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(150, 120, 200, 0.15);
+    }
+
+    tr:first-child {
+        background-color: #d1b3ff; /* violet pastel clair */
+        color: white;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    td {
+        padding: 14px 20px;
+        border-bottom: 1px solid #f0e6ff;
+    }
+
+    tr:hover:not(:first-child) {
+        background-color: #f9f5ff;
+        transition: 0.3s ease;
+    }
+
+    /* 🧭 Boutons */
+    a {
+        text-decoration: none;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 500;
+        margin-right: 6px;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    /* 🔴 Supprimer */
+    a[href*="deleteAuthor"] {
+        background-color: #ff7b7b;
+    }
+    a[href*="deleteAuthor"]:hover {
+        background-color: #ff4d4d;
+        transform: scale(1.05);
+    }
+
+    /* 🔍 Afficher */
+    a[href*="showDetails"] {
+        background-color: #a5b8ff; /* bleu lavande clair */
+    }
+    a[href*="showDetails"]:hover {
+        background-color: #7f9fff;
+        transform: scale(1.05);
+    }
+
+    /* 💜 Modifier */
+    a[href*="updateAuthor"] {
+        background-color: #c9a6ff; /* violet doux */
+    }
+    a[href*="updateAuthor"]:hover {
+        background-color: #b892ff;
+        transform: scale(1.05);
+    }
+</style>
+
 <table>
-<tr>
-  <td>Username</td>
-  <td>Email</td>
-  <td>Actions</td>
-</tr>
-{% for i in list %}
-<tr>
- <td>{{i.username}}</td>
- <td>{{i.email}}</td>
- <td>
- <a href="{{path('deleteAuthor',{'id':i.id})}}">Delete</a> {#or URL #}
- <a href="{{path('showDetails',{'id':i.id})}}">Show</a>
- <a href="{{path('updateAuthor',{'id':i.id})}}">Update</a>
-</td>
-</tr>
-{% endfor %}
+  <tr>
+    <td>Username</td>
+    <td>Email</td>
+    <td>Actions</td>
+  </tr>
+  {% for i in list %}
+  <tr>
+    <td>{{ i.username }}</td>
+    <td>{{ i.email }}</td>
+    <td>
+      <a href="{{ path('deleteAuthor', {'id': i.id}) }}">Delete</a>
+      <a href="{{ path('showDetails', {'id': i.id}) }}">Show</a>
+      <a href="{{ path('updateAuthor', {'id': i.id}) }}">Update</a>
+    </td>
+  </tr>
+  {% endfor %}
 </table>

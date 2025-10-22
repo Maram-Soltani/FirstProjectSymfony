@@ -1,72 +1,98 @@
 {% block body %}
 <style>
-body {
-  font-family: "Poppins", Arial, sans-serif;
-  background-color: #f5f7fa;
-  padding: 40px;
-  color: #333;
-}
+    body {
+        font-family: "Poppins", Arial, sans-serif;
+        background-color: #fdfaff; /* fond lavande clair */
+        padding: 40px;
+        color: #333;
+    }
 
-h1 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 30px;
-  font-size: 32px;
-}
+    h1 {
+        text-align: center;
+        color: #9370db; /* violet lavande */
+        margin-bottom: 30px;
+        font-size: 32px;
+        font-weight: 600;
+    }
 
-/* Tableau principal */
-table {
-  width: 80%;
-  margin: 0 auto;
-  border-collapse: collapse;
-  background-color: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
+    /* 🌸 Tableau principal */
+    table {
+        width: 85%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(150, 120, 200, 0.15);
+    }
 
-table tr:first-child {
-  background-color: #3498db;
-  color: white;
-  text-align: left;
-  font-weight: 600;
-}
+    /* En-tête */
+    table tr:first-child {
+        background-color: #d1b3ff; /* violet pastel */
+        color: white;
+        text-align: left;
+        font-weight: 600;
+    }
 
-table th, table td {
-  padding: 14px 20px;
-  border-bottom: 1px solid #eee;
-}
+    table th, table td {
+        padding: 14px 20px;
+        border-bottom: 1px solid #f0e6ff;
+    }
 
-table tr:hover:not(:first-child) {
-  background-color: #f1f9ff;
-  transition: background-color 0.3s ease;
-}
+    table tr:hover:not(:first-child) {
+        background-color: #f9f5ff; /* survol violet clair */
+        transition: background-color 0.3s ease;
+    }
 
-.counter {
-  text-align: center;
-  margin-top: 25px;
-  font-size: 18px;
-}
+    /* 🧮 Compteur */
+    .counter {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 18px;
+        color: #6a1b9a;
+    }
+
+    .counter p {
+        background-color: #f8f4ff;
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 8px;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(150, 120, 200, 0.1);
+    }
+
+    /* 🔴 Message si vide */
+    .no-books {
+        text-align: center;
+        color: #d63384;
+        font-weight: bold;
+        background-color: #fff0f6;
+        width: 50%;
+        margin: 30px auto;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(200, 150, 200, 0.1);
+    }
 </style>
 
-<h1>List of Books</h1>
+<h1>Liste des livres</h1>
 
 {% if books is empty %}
-    <p style="text-align:center; color:red; font-weight:bold;">No Books found</p>
+    <p class="no-books">Aucun livre trouvé 📚</p>
 {% else %}
 <table>
     <tr>
-        <th>Title</th>
-        <th>Publication date</th>
-        <th>Published</th>
-        <th>Category</th>
-        <th>Author</th>
+        <th>Titre</th>
+        <th>Date de publication</th>
+        <th>Publié</th>
+        <th>Catégorie</th>
+        <th>Auteur</th>
     </tr>
     {% for book in books %}
     <tr>
         <td>{{ book.title }}</td>
-        <td>{{ book.publicationDate ? book.publicationDate|date('F j, Y H:i') : '' }}</td>
-        <td>{{ book.published ? 'Yes' : 'No' }}</td>
+        <td>{{ book.publicationDate ? book.publicationDate|date('d/m/Y') : '' }}</td>
+        <td>{{ book.published ? 'Oui' : 'Non' }}</td>
         <td>{{ book.category }}</td>
         <td>{{ book.author.username }}</td>
     </tr>
@@ -74,8 +100,8 @@ table tr:hover:not(:first-child) {
 </table>
 
 <div class="counter">
-    <p>Number of published books : {{ countPublished }}</p>
-    <p>Number of unpublished books : {{ countUnpublished }}</p>
+    <p>📘 Livres publiés : {{ countPublished }}</p>
+    <p>📕 Livres non publiés : {{ countUnpublished }}</p>
 </div>
 {% endif %}
 {% endblock %}
