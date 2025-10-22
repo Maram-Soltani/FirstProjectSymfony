@@ -1,3 +1,81 @@
-{% for book in author.books %}
-    <p>{{ book.title }} - {{ book.category }}</p>
-{% endfor %}
+{% block body %}
+<style>
+body {
+  font-family: "Poppins", Arial, sans-serif;
+  background-color: #f5f7fa;
+  padding: 40px;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 32px;
+}
+
+/* Tableau principal */
+table {
+  width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+table tr:first-child {
+  background-color: #3498db;
+  color: white;
+  text-align: left;
+  font-weight: 600;
+}
+
+table th, table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+table tr:hover:not(:first-child) {
+  background-color: #f1f9ff;
+  transition: background-color 0.3s ease;
+}
+
+.counter {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 18px;
+}
+</style>
+
+<h1>List of Books</h1>
+
+{% if books is empty %}
+    <p style="text-align:center; color:red; font-weight:bold;">No Books found</p>
+{% else %}
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Publication date</th>
+        <th>Published</th>
+        <th>Category</th>
+        <th>Author</th>
+    </tr>
+    {% for book in books %}
+    <tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.publicationDate ? book.publicationDate|date('F j, Y H:i') : '' }}</td>
+        <td>{{ book.published ? 'Yes' : 'No' }}</td>
+        <td>{{ book.category }}</td>
+        <td>{{ book.author.username }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="counter">
+    <p>Number of published books : {{ countPublished }}</p>
+    <p>Number of unpublished books : {{ countUnpublished }}</p>
+</div>
+{% endif %}
+{% endblock %}

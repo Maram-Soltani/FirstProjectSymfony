@@ -26,6 +26,7 @@ class Book
     #[ORM\Column(type: 'boolean')]
     private $published = true; // valeur par défaut
 
+
     // Getter
     public function getPublished(): ?bool
     {
@@ -115,6 +116,8 @@ class Book
 
         return $this;
     }
+
+
 
 
 

@@ -2,14 +2,79 @@
 
 {% block title %}Ajouter un livre{% endblock %}
 
-        {% block body %}
-        <h1>Ajouter un livre</h1>
+{% block body %}
+<style>
+    body {
+        background-color: #fdfaff; /* violet très très clair */
+        font-family: 'Poppins', sans-serif;
+    }
 
-        {{ form_start(form) }}
-            {{ form_row(form.title) }}
-            {{ form_row(form.category) }}
-            {{ form_row(form.author) }}
-            {{ form_row(form.publicationDate) }}
-            <button class="btn btn-primary">Ajouter</button>
-        {{ form_end(form) }}
+    .form-container {
+        max-width: 520px;
+        margin: 70px auto;
+        padding: 35px;
+        background-color: #ffffff; /* fond blanc pur */
+        border-radius: 14px;
+        box-shadow: 0 6px 14px rgba(150, 120, 200, 0.15);
+    }
+
+    h1 {
+        text-align: center;
+        color: #9370db; /* lavande claire */
+        margin-bottom: 25px;
+        font-weight: 600;
+    }
+
+    label {
+        font-weight: 500;
+        color: #555;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        background-color: #faf7ff; /* champ légèrement lavande */
+        transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+        border-color: #c9a6ff;
+        background-color: #f4edff;
+        outline: none;
+    }
+
+    .btn-primary {
+        background-color: #d1b3ff; /* violet pastel clair */
+        border: none;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 10px;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #b892ff;
+        transform: scale(1.03);
+    }
+</style>
+
+<div class="form-container">
+    <h1>Ajouter un livre</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.category) }}
+        {{ form_row(form.author) }}
+        {{ form_row(form.publicationDate) }}
+        <button class="btn-primary">Ajouter</button>
+    {{ form_end(form) }}
+</div>
 {% endblock %}
+

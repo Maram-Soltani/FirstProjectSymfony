@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\BookRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,43 +21,55 @@ final class BookController extends AbstractController
         ]);
     }
 
-    //add
     #[Route('/book/add', name: 'book_add')]
-public function add(Request $request, ManagerRegistry $doctrine): Response
-{
-    $book = new Book();
-    $book->setPublished(true); // publié par défaut
-    $book->setPublicationDate(new \DateTime()); // date actuelle
+    public function add(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $book = new Book();
+        $book->setPublished(true);
+        $book->setPublicationDate(new \DateTime());
 
-    // Création du formulaire
-    $form = $this->createForm(BookType::class, $book);
-    $form->handleRequest($request);
+        $form = $this->createForm(BookType::class, $book);
+        $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        $em = $doctrine->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $doctrine->getManager();
+            $author = $book->getAuthor();
 
-        // Récupération de l'auteur sélectionné
-        $author = $book->getAuthor();
+            $author->setNbBooks($author->getNbBooks() + 1);
+            $author->addBook($book);
 
-        // Incrémentation nb_books
-        $author->setNbBooks($author->getNbBooks() + 1);
+            $em->persist($book);
+            $em->flush();
 
-        // Ajout du livre à la collection de l'auteur (relation bidirectionnelle)
-        $author->addBook($book);
+            $this->addFlash('success', 'Livre ajouté avec succès !');
+            return $this->redirectToRoute('liste_books');
+        }
 
-        // Persistance
-        $em->persist($book);  // le $author sera mis à jour automatiquement
-        $em->flush();
-
-        $this->addFlash('success', 'Livre ajouté avec succès !');
-
-        // Redirection vers la liste des livres (remplacez 'book_index' par votre route réelle)
-        return $this->redirectToRoute('book_index');
+        return $this->render('book/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
-    
-    return $this->render('book/add.html.twig', [
-        'form' => $form->createView(),
-    ]);
-}
 
+    #[Route('/books', name: 'liste_books')]
+    public function listBooks(BookRepository $bookRepository): Response
+    {
+        $books = $bookRepository->findAll();
+
+        $countPublished = 0;
+        $countUnpublished = 0;
+
+        foreach ($books as $book) {
+            if ($book->getPublished()) {
+                $countPublished++;
+            } else {
+                $countUnpublished++;
+            }
+        }
+
+        return $this->render('book/liste.html.twig', [
+            'books' => $books,
+            'countPublished' => $countPublished,
+            'countUnpublished' => $countUnpublished,
+        ]);
+    }
 }

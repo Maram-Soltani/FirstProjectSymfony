@@ -4,72 +4,77 @@
 
 {% block body %}
 <style>
-/* 🌿 Style global du formulaire */
-.container-form {
-    max-width: 500px;
-    margin: 60px auto;
-    background: #ffffff;
-    padding: 30px 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    font-family: 'Poppins', sans-serif;
-}
+    body {
+        background-color: #fdfaff; /* violet très clair, fond doux */
+        font-family: 'Poppins', sans-serif;
+    }
 
-/* 🏷️ Titre */
-.container-form h1 {
-    text-align: center;
-    color: #0d6efd;
-    margin-bottom: 25px;
-}
+    .container-form {
+        max-width: 500px;
+        margin: 70px auto;
+        background: #ffffff; /* carte blanche */
+        padding: 35px 40px;
+        border-radius: 15px;
+        box-shadow: 0 6px 14px rgba(150, 120, 200, 0.15);
+    }
 
-/* 🧾 Labels */
-label {
-    display: block;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 5px;
-}
+    .container-form h1 {
+        text-align: center;
+        color: #9370db; /* lavande claire */
+        margin-bottom: 25px;
+        font-weight: 600;
+    }
 
-/* ✏️ Champs de saisie */
-input[type="text"],
-input[type="email"] {
-    width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
+    label {
+        display: block;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 6px;
+    }
 
-input[type="text"]:focus,
-input[type="email"]:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 5px rgba(13,110,253,0.3);
-    outline: none;
-}
+    input[type="text"],
+    input[type="email"] {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #faf7ff; /* lavande très claire */
+        transition: all 0.3s ease;
+    }
 
-/* ⚠️ Messages d'erreur */
-.form-error {
-    color: #dc3545;
-    font-size: 0.9em;
-    margin-bottom: 10px;
-}
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+        border-color: #c9a6ff;
+        background-color: #f4edff;
+        outline: none;
+    }
 
-/* 🟩 Bouton */
-button, input[type="submit"] {
-    background-color: #198754;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    font-weight: bold;
-    font-size: 1rem;
-    transition: 0.3s;
-}
+    .form-error {
+        color: #d9534f;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+    }
 
+    button,
+    input[type="submit"] {
+        background-color: #d1b3ff; /* violet pastel clair */
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        width: 100%;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
 
+    button:hover,
+    input[type="submit"]:hover {
+        background-color: #b892ff;
+        transform: scale(1.03);
+    }
 </style>
 
 <div class="container-form">
@@ -85,7 +90,6 @@ button, input[type="submit"] {
     {{ form_widget(formulaire.username, {'attr': {'class': 'form-control'}}) }}
     <div class="form-error">{{ form_errors(formulaire.username) }}</div>
 
-    
 
     {{ form_end(formulaire) }}
 </div>
