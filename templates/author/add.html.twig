@@ -1,16 +1,92 @@
-{#{{form(formulaire)}}#}
-<h1>Add</h1>
-{{form_start(formulaire)}} {#<form>#}
+{% extends 'base.html.twig' %}
 
-{{form_label(formulaire.email,'Votre nom')}} {#<label>#}
-{{form_widget(formulaire.email)}} {#<input type>#}
-{{form_errors(formulaire.email)}} 
+{% block title %}Ajouter un auteur{% endblock %}
 
-{{form_label(formulaire.username)}} {#<label>#}
-{{form_widget(formulaire.username)}} {#<input type>#}
-{{form_errors(formulaire.username)}}
+{% block body %}
+<style>
+/* 🌿 Style global du formulaire */
+.container-form {
+    max-width: 500px;
+    margin: 60px auto;
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* 🏷️ Titre */
+.container-form h1 {
+    text-align: center;
+    color: #0d6efd;
+    margin-bottom: 25px;
+}
+
+/* 🧾 Labels */
+label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* ✏️ Champs de saisie */
+input[type="text"],
+input[type="email"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 5px rgba(13,110,253,0.3);
+    outline: none;
+}
+
+/* ⚠️ Messages d'erreur */
+.form-error {
+    color: #dc3545;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+/* 🟩 Bouton */
+button, input[type="submit"] {
+    background-color: #198754;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: 0.3s;
+}
 
 
+</style>
 
+<div class="container-form">
+    <h1>Ajouter un auteur</h1>
 
-{{form_end(formulaire)}} {#</form>#}
+    {{ form_start(formulaire) }}
+
+    <label for="email">Email</label>
+    {{ form_widget(formulaire.email, {'attr': {'class': 'form-control'}}) }}
+    <div class="form-error">{{ form_errors(formulaire.email) }}</div>
+
+    <label for="username">Nom</label>
+    {{ form_widget(formulaire.username, {'attr': {'class': 'form-control'}}) }}
+    <div class="form-error">{{ form_errors(formulaire.username) }}</div>
+
+    
+
+    {{ form_end(formulaire) }}
+</div>
+{% endblock %}

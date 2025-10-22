@@ -46,14 +46,15 @@ final class AuthorController extends AbstractController
     public function addForm(Request $request, ManagerRegistry $doctrine){
     $author=new Author();
     $form=$this->createForm(AuthorType::class,$author);
-    $form->add('Add',SubmitType::class);
+    //$form->add('Add',SubmitType::class);
 
     $form->handleRequest($request);
-    if($form->isSubmitted()){
-     $em=$doctrine->getManager();
-     $em->persist($author);
-     $em->flush();
-     return $this->redirectToRoute('showAll');
+    if ($form->isSubmitted() && $form->isValid()) {
+        $author->setNbBooks(0); // valeur par défaut
+        $em = $doctrine->getManager();
+        $em->persist($author);
+        $em->flush();
+        return $this->redirectToRoute('showAll');
     }
     return $this->render('author/add.html.twig',['formulaire'=>$form->createView()]);
     // return $this->renderForm()
@@ -78,6 +79,29 @@ final class AuthorController extends AbstractController
        return $this->render('author/showDetails.html.twig',['author'=>$author]);
     }
 
+    #[Route('/updateAuthor/{id}', name:'updateAuthor')]
+public function updateAuthor($id, AuthorRepository $repo, Request $request, ManagerRegistry $doctrine): Response
+{
+    $author = $repo->find($id);
+    if (!$author) {
+        throw $this->createNotFoundException('Auteur non trouvé');
+    }
+
+    $form = $this->createForm(AuthorType::class, $author);
+    $form->add('Update', SubmitType::class);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $em = $doctrine->getManager();
+        $em->flush();
+        return $this->redirectToRoute('showAll');
+    }
+
+    return $this->render('author/edit.html.twig', [
+        'formulaire' => $form->createView()
+    ]);
+}
     /*#[Route('/ShowAllAuthorsQB',name:'ShowAllAuthorsQB')]
     public function ShowAllAuthorsQB(AuthorRepository $repo){
        $author=$repo->ShowAllAuthorsQB();
