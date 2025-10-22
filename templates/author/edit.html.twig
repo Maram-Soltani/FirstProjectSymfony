@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un auteur{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+
+    <h2 class="mb-4 text-primary">Modifier l'auteur</h2>
+
+    {{ form_start(formulaire) }}
+
+    <div class="mb-3">
+        {{ form_label(formulaire.username, 'Nom d\'utilisateur') }}
+        {{ form_widget(formulaire.username, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(formulaire.username) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(formulaire.email, 'Email') }}
+        {{ form_widget(formulaire.email, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(formulaire.email) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(formulaire.nbBooks, 'Nombre de livres') }}
+        {{ form_widget(formulaire.nbBooks, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(formulaire.nbBooks) }}
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success">💾 Enregistrer les modifications</button>
+        <a href="{{ path('showAll') }}" class="btn btn-secondary">↩ Retour</a>
+    </div>
+    
+
+    {{ form_end(formulaire) }}
+
+</div>
+{% endblock %}
