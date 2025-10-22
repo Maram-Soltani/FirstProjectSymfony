@@ -1,0 +1,60 @@
+{% block body %}
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fdfaff;
+    padding: 40px;
+    color: #333;
+}
+
+.details-container {
+    max-width: 600px;
+    margin: 60px auto;
+    background-color: #ffffff;
+    padding: 35px 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 14px rgba(150, 120, 200, 0.15);
+    text-align: center;
+}
+
+h1 {
+    color: #9370db;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+p {
+    font-size: 18px;
+    color: #555;
+    margin: 12px 0;
+}
+
+.btn-back {
+    display: inline-block;
+    margin-top: 25px;
+    background-color: #c9a6ff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease, transform 0.2s ease;
+}
+
+.btn-back:hover {
+    background-color: #b892ff;
+    transform: scale(1.03);
+}
+</style>
+
+<div class="details-container">
+    <h1>Détails du livre : {{ book.title }}</h1>
+
+    <p><strong>Catégorie :</strong> {{ book.category }}</p>
+    <p><strong>Date de publication :</strong> {{ book.publicationDate ? book.publicationDate|date('Y-m-d') : '' }}</p>
+    <p><strong>Publié ? :</strong> {{ book.published ? 'Oui' : 'Non' }}</p>
+    <p><strong>Auteur :</strong> {{ book.author.username }}</p>
+
+    <a href="{{ path('liste_books') }}" class="btn-back">⬅ Retour à la liste</a>
+</div>
+{% endblock %}

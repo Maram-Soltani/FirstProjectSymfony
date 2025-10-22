@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\BookRepository;
+use App\Repository\AuthorRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,6 +98,36 @@ public function edit(int $id, Request $request, ManagerRegistry $doctrine, BookR
         'form' => $form->createView(),
         'book' => $book,
     ]);
+}
+#[Route('/showbook/{id}', name: 'showbook')]
+    public function showbook(BookRepository $repo, $id)
+    {
+        $book = $repo->find($id);
+
+        if (!$book) {
+            throw $this->createNotFoundException('Livre non trouvé');
+        }
+
+        $author = $book->getAuthor(); // récupérer l'auteur associé
+
+        return $this->render('book/showbook.html.twig', [
+            'book' => $book,
+            'author' => $author,
+        ]);
+    }
+#[Route('/deletebook/{id}', name:'deletebook')]
+public function deletebook($id, BookRepository $repo, ManagerRegistry $doctrine): Response
+{
+    $book = $repo->find($id);
+    if (!$book) {
+        throw $this->createNotFoundException('Livre non trouvé');
+    }
+
+    $em = $doctrine->getManager();
+    $em->remove($book);
+    $em->flush();
+
+    return $this->redirectToRoute('liste_books'); // ou ta route liste
 }
 
 }
