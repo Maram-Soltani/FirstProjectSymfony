@@ -87,6 +87,7 @@
         <th>Publié</th>
         <th>Catégorie</th>
         <th>Auteur</th>
+        <th>Actions</th>
     </tr>
     {% for book in books %}
     <tr>
@@ -95,6 +96,24 @@
         <td>{{ book.published ? 'Oui' : 'Non' }}</td>
         <td>{{ book.category }}</td>
         <td>{{ book.author.username }}</td>
+        <td>
+            <a href="{{ path('book_edit', {'id': book.id}) }}" 
+               style="
+                background-color: #9370db;
+                color: white;
+                padding: 6px 14px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: 500;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                transition: 0.3s;
+               "
+               onmouseover="this.style.backgroundColor='#b58ef5'"
+               onmouseout="this.style.backgroundColor='#9370db'">
+               ✏️ Modifier
+            </a>
+        </td>
+
     </tr>
     {% endfor %}
 </table>

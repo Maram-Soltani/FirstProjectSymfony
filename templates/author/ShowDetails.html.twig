@@ -1,5 +1,59 @@
+{% block body %}
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #fdfaff; /* fond lavande très clair */
+        padding: 40px;
+        color: #333;
+    }
 
+    .details-container {
+        max-width: 500px;
+        margin: 60px auto;
+        background-color: #ffffff; /* carte blanche */
+        padding: 35px 40px;
+        border-radius: 15px;
+        box-shadow: 0 6px 14px rgba(150, 120, 200, 0.15);
+        text-align: center;
+    }
 
-<h1>Details d'un auteur dont l'id est {{author.id}}</h1>
-{{author.username}}
-{{author.email}}
+    h1 {
+        color: #9370db; /* violet lavande */
+        font-weight: 600;
+        margin-bottom: 30px;
+    }
+
+    p {
+        font-size: 18px;
+        color: #555;
+        margin: 12px 0;
+    }
+
+    /* Bouton Back */
+    .btn-back {
+        display: inline-block;
+        margin-top: 25px;
+        background-color: #c9a6ff; /* violet pastel */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-back:hover {
+        background-color: #b892ff;
+        transform: scale(1.03);
+    }
+</style>
+
+<div class="details-container">
+    <h1>Détails de l'auteur #{{ author.id }}</h1>
+
+    <p><strong>Nom :</strong> {{ author.username }}</p>
+    <p><strong>Email :</strong> {{ author.email }}</p>
+
+    <a href="{{ path('showAll') }}" class="btn-back">⬅ Back</a>
+</div>
+{% endblock %}

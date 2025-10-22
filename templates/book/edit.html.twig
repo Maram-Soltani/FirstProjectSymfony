@@ -3,9 +3,6 @@
 
 <div class="form-container">
     {{ form_start(form) }}
-        {# Supprime ceci si pas de champ "ref" #}
-        {# {{ form_row(form.ref) }} #}
-
         {{ form_row(form.title) }}
         {{ form_row(form.publicationDate) }}
         {{ form_row(form.published) }}
@@ -16,82 +13,96 @@
 </div>
 
 <p class="back-link">
-    <a href="{{ path('book_list') }}">back to list</a>
+    <a href="{{ path('liste_books') }}">⬅ Back to list</a>
 </p>
 
 <style>
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f7f9fc;
+        font-family: 'Poppins', sans-serif;
+        background-color: #fdfaff; /* fond lavande très clair */
         color: #333;
         margin: 0;
-        padding: 0;
+        padding: 40px;
     }
 
     .title {
         text-align: center;
-        color: #2c3e50;
+        color: #9370db; /* violet lavande */
         margin-top: 40px;
         font-size: 2em;
+        font-weight: 600;
     }
 
     .form-container {
         width: 50%;
         margin: 30px auto;
         padding: 30px;
-        background-color: #fff;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        border-radius: 10px;
-    }
-
-    .form-container .form-group {
-        margin-bottom: 20px;
+        background-color: #ffffff; /* carte blanche */
+        box-shadow: 0 6px 14px rgba(150, 120, 200, 0.15);
+        border-radius: 15px;
     }
 
     label {
         display: block;
-        margin-bottom: 5px;
-        font-weight: 600;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #555;
     }
 
     input, select {
         width: 100%;
         padding: 10px;
-        border: 1px solid #ccd0d5;
-        border-radius: 5px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
         font-size: 1em;
+        margin-bottom: 15px;
+        background-color: #faf7ff; /* lavande très clair */
+        transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+        border-color: #c9a6ff;
+        background-color: #f4edff;
+        outline: none;
     }
 
     .btn-submit {
         display: block;
         width: 100%;
         padding: 12px;
-        background-color: #3498db;
+        background-color: #c9a6ff; /* violet pastel clair */
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 10px;
         font-size: 1em;
+        font-weight: 600;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     .btn-submit:hover {
-        background-color: #2980b9;
+        background-color: #b892ff;
+        transform: scale(1.03);
     }
 
     .back-link {
         text-align: center;
-        margin-top: 20px;
+        margin-top: 25px;
     }
 
     .back-link a {
         text-decoration: none;
-        color: #3498db;
-        font-weight: 500;
+        color: #9370db;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 10px;
+        background-color: #f4edff;
+        transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     .back-link a:hover {
-        text-decoration: underline;
+        background-color: #e5d4ff;
+        transform: scale(1.03);
     }
 
     @media (max-width: 768px) {
