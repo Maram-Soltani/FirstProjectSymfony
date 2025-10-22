@@ -87,21 +87,27 @@ public function updateAuthor($id, AuthorRepository $repo, Request $request, Mana
         throw $this->createNotFoundException('Auteur non trouvé');
     }
 
-    $form = $this->createForm(AuthorType::class, $author);
-    $form->add('Update', SubmitType::class);
+    // Formulaire pour éditer l'auteur
+    $form = $this->createForm(AuthorType::class, $author, [
+        'is_edit' => true
+    ]);
 
+    // Traiter la requête
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
         $em = $doctrine->getManager();
-        $em->flush();
-        return $this->redirectToRoute('showAll');
+        $em->flush(); // enregistre les modifications
+        return $this->redirectToRoute('showAll'); // redirige vers la liste
     }
 
     return $this->render('author/edit.html.twig', [
-        'formulaire' => $form->createView()
+        'form' => $form->createView(),
+        'author' => $author
     ]);
 }
+
+
     /*#[Route('/ShowAllAuthorsQB',name:'ShowAllAuthorsQB')]
     public function ShowAllAuthorsQB(AuthorRepository $repo){
        $author=$repo->ShowAllAuthorsQB();

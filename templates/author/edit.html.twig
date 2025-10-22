@@ -1,39 +1,34 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Modifier un auteur{% endblock %}
-
 {% block body %}
-<div class="container mt-4">
+<h1 class="title">Update Author</h1>
 
-    <h2 class="mb-4 text-primary">Modifier l'auteur</h2>
-
-    {{ form_start(formulaire) }}
-
-    <div class="mb-3">
-        {{ form_label(formulaire.username, 'Nom d\'utilisateur') }}
-        {{ form_widget(formulaire.username, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(formulaire.username) }}
-    </div>
-
-    <div class="mb-3">
-        {{ form_label(formulaire.email, 'Email') }}
-        {{ form_widget(formulaire.email, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(formulaire.email) }}
-    </div>
-
-    <div class="mb-3">
-        {{ form_label(formulaire.nbBooks, 'Nombre de livres') }}
-        {{ form_widget(formulaire.nbBooks, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(formulaire.nbBooks) }}
-    </div>
-
-    <div class="mt-4">
-        <button type="submit" class="btn btn-success">💾 Enregistrer les modifications</button>
-        <a href="{{ path('showAll') }}" class="btn btn-secondary">↩ Retour</a>
-    </div>
-    
-
-    {{ form_end(formulaire) }}
-
+<div class="form-container">
+    {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {% if form.nbBooks is defined %}
+            {{ form_row(form.nbBooks) }}
+        {% endif %}
+        {{ form_row(form.save) }}
+    {{ form_end(form) }}
 </div>
+
+<p class="back-link">
+    <a href="{{ path('showAll') }}">⬅ Back to list</a>
+</p>
+
+<style>
+/* Même style lavande clair que tes autres formulaires */
+body { font-family: 'Poppins', sans-serif; background-color: #fdfaff; color: #333; margin:0; padding:40px; }
+.title { text-align:center; color:#9370db; margin-top:40px; font-size:2em; font-weight:600; }
+.form-container { width:50%; margin:30px auto; padding:30px; background:#fff; box-shadow:0 6px 14px rgba(150,120,200,0.15); border-radius:15px; }
+label { display:block; margin-bottom:6px; font-weight:500; color:#555; }
+input { width:100%; padding:10px; border:1px solid #ddd; border-radius:10px; font-size:1em; margin-bottom:15px; background-color:#faf7ff; transition: all 0.3s ease; }
+input:focus { border-color:#c9a6ff; background-color:#f4edff; outline:none; }
+.btn-submit { display:block; width:100%; padding:12px; background-color:#c9a6ff; color:white; border:none; border-radius:10px; font-size:1em; font-weight:600; cursor:pointer; transition: background-color 0.3s ease, transform 0.2s ease; }
+.btn-submit:hover { background-color:#b892ff; transform:scale(1.03); }
+.back-link { text-align:center; margin-top:25px; }
+.back-link a { text-decoration:none; color:#9370db; font-weight:600; padding:8px 16px; border-radius:10px; background-color:#f4edff; transition: background-color 0.3s ease, transform 0.2s ease; }
+.back-link a:hover { background-color:#e5d4ff; transform:scale(1.03); }
+@media (max-width:768px) { .form-container { width:90%; padding:20px; } }
+</style>
 {% endblock %}

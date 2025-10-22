@@ -14,31 +14,32 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class AuthorType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-{
-    $builder
-        ->add('username', TextType::class)
-        ->add('email', EmailType::class)
-        ->add('save', SubmitType::class, [
-            'label' => 'Save',
-            'attr' => ['class' => 'btn btn-primary mt-2']
-        ]);
+   public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('username', TextType::class)
+            ->add('email', EmailType::class);
 
-    // 👉 On ajoute nbBooks SEULEMENT si on est en mode édition
-    if ($options['is_edit']) {
-        $builder->add('nbBooks', IntegerType::class, [
-            'label' => 'Nombre de livres',
-            'disabled' => true, // en lecture seule
+        // Ajouter nbBooks seulement en édition (lecture seule)
+        if ($options['is_edit']) {
+            $builder->add('nbBooks', IntegerType::class, [
+                'label' => 'Nombre de livres',
+                'disabled' => true,
+            ]);
+        }
+
+        // Bouton dynamique : label Save ou Update selon is_edit
+        $builder->add('save', SubmitType::class, [
+            'label' => $options['is_edit'] ? 'Update' : 'Save',
+            'attr' => ['class' => 'btn-submit mt-2']
         ]);
     }
-}
-
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Author::class,
-            'is_edit' => false, 
+            'is_edit' => false,
         ]);
     }
 }
