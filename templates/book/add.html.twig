@@ -69,6 +69,7 @@
     <h1>Ajouter un livre</h1>
 
     {{ form_start(form) }}
+        {{ form_row(form.ref) }}
         {{ form_row(form.title) }}
         {{ form_row(form.category) }}
         {{ form_row(form.author) }}

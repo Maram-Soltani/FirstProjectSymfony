@@ -38,7 +38,7 @@ final class BookController extends AbstractController
 
             $author->setNbBooks($author->getNbBooks() + 1);
             $author->addBook($book);
-
+            $book->setRef('BK-' . strtoupper(uniqid()));
             $em->persist($book);
             $em->flush();
 
@@ -52,27 +52,39 @@ final class BookController extends AbstractController
     }
 
     #[Route('/books', name: 'liste_books')]
-    public function listBooks(BookRepository $bookRepository): Response
-    {
+public function listBooks(BookRepository $bookRepository, Request $request): Response
+{
+    // 1️ Récupérer la valeur saisie dans le champ de recherche
+    $ref = $request->query->get('ref');
+
+    // 2️ Si l’utilisateur cherche une ref, on filtre
+    if ($ref) {
+        $books = $bookRepository->searchBookByRef($ref);
+    } else {
         $books = $bookRepository->findAll();
-
-        $countPublished = 0;
-        $countUnpublished = 0;
-
-        foreach ($books as $book) {
-            if ($book->getPublished()) {
-                $countPublished++;
-            } else {
-                $countUnpublished++;
-            }
-        }
-
-        return $this->render('book/liste.html.twig', [
-            'books' => $books,
-            'countPublished' => $countPublished,
-            'countUnpublished' => $countUnpublished,
-        ]);
     }
+
+    // 3️ Compter les livres publiés et non publiés
+    $countPublished = 0;
+    $countUnpublished = 0;
+
+    foreach ($books as $book) {
+        if ($book->getPublished()) {
+            $countPublished++;
+        } else {
+            $countUnpublished++;
+        }
+    }
+
+    // 4️ Renvoyer le tout au template
+    return $this->render('book/liste.html.twig', [
+        'books' => $books,
+        'countPublished' => $countPublished,
+        'countUnpublished' => $countUnpublished,
+        'ref' => $ref, // utile pour réafficher la valeur dans le champ
+    ]);
+}
+
 
     #[Route('/book/edit/{id}', name: 'book_edit')]
 public function edit(int $id, Request $request, ManagerRegistry $doctrine, BookRepository $bookRepository): Response
@@ -129,5 +141,15 @@ public function deletebook($id, BookRepository $repo, ManagerRegistry $doctrine)
 
     return $this->redirectToRoute('liste_books'); // ou ta route liste
 }
+
+///
+public function searchBookByRef($ref)
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.ref LIKE :ref')
+            ->setParameter('ref', '%'.$ref.'%')
+            ->getQuery()
+            ->getResult();
+    }
 
 }

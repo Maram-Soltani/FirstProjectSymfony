@@ -40,4 +40,15 @@ class BookRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function searchBookByRef($ref)
+{
+    return $this->createQueryBuilder('b')
+        ->andWhere('b.ref LIKE :ref')
+        ->setParameter('ref', '%' . $ref . '%')
+        ->getQuery()
+        ->getResult();
+}
+
+
+
 }
