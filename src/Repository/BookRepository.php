@@ -49,6 +49,17 @@ public function searchBookByRef($ref)
         ->getResult();
 }
 
+public function booksListByAuthors()
+{
+    return $this->createQueryBuilder('b')
+        ->join('b.author', 'a')
+        ->addSelect('a')
+        ->orderBy('a.username', 'ASC')
+        ->addOrderBy('b.title', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+
 
 
 }

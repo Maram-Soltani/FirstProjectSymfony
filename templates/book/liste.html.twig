@@ -140,7 +140,11 @@
 </style>
 
 <h1>Liste des livres</h1>
-
+{% if sortedByAuthor is defined and sortedByAuthor %}
+    <p style="text-align:center; color:#9370db; font-weight:500; margin-bottom:15px;">
+        📖 Liste triée par auteur
+    </p>
+{% endif %}
 <!-- .. Zone de recherche -->
 <div class="search-box">
     <form method="get" action="{{ path('liste_books') }}">
@@ -183,6 +187,13 @@
     <p>📚 Total : {{ books|length }}</p>
 </div>
 
-<a href="{{ path('book_add') }}" class="btn btn-add">➕ Créer nouveau</a>
+<div style="text-align:center; margin-top:20px;">
+    <a href="{{ path('books_by_author') }}" class="btn btn-add" style="background-color:#b19cd9;">
+        📖 Trier par auteur
+    </a>
+    <a href="{{ path('book_add') }}" class="btn btn-add">
+        ➕ Créer nouveau
+    </a>
+</div>
 {% endif %}
 {% endblock %}

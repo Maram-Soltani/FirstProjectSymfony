@@ -152,4 +152,41 @@ public function searchBookByRef($ref)
             ->getResult();
     }
 
+   // src/Controller/BookController.php
+
+#[Route('/books', name: 'liste_books')]
+public function listeBooks(Request $request, BookRepository $bookRepo): Response
+{
+    $ref = $request->query->get('ref');
+    
+    if ($ref) {
+        $books = $bookRepo->findBy(['ref' => $ref]);
+    } else {
+        $books = $bookRepo->findAll();
+    }
+
+    $countPublished = count(array_filter($books, fn($b) => $b->getPublished()));
+    $countUnpublished = count(array_filter($books, fn($b) => !$b->getPublished()));
+
+    return $this->render('book/liste.html.twig', [
+        'books' => $books,
+        'countPublished' => $countPublished,
+        'countUnpublished' => $countUnpublished,
+        'ref' => $ref,
+    ]);
+}
+
+#[Route('/books/by-author', name: 'books_by_author')]
+public function booksByAuthor(BookRepository $bookRepo): Response
+{
+    $books = $bookRepo->booksListByAuthors(); // méthode custom dans repository
+    return $this->render('book/liste.html.twig', [
+        'books' => $books,
+        'countPublished' => count(array_filter($books, fn($b) => $b->getPublished())),
+        'countUnpublished' => count(array_filter($books, fn($b) => !$b->getPublished())),
+        'sortedByAuthor' => true,
+    ]);
+}
+
+
 }
