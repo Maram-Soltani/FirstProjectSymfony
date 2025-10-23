@@ -60,6 +60,41 @@ public function booksListByAuthors()
         ->getResult();
 }
 
+///2023
 
+public function findBooksBefore2023WithAuthorHavingMoreThan10Books()
+{
+    return $this->createQueryBuilder('b')
+        ->join('b.author', 'a')
+        ->addSelect('a')
+        ->where('b.publicationDate < :date')
+        ->andWhere('(
+            SELECT COUNT(b2.id)
+            FROM App\Entity\Book b2
+            WHERE b2.author = a
+        ) > 10')
+        ->setParameter('date', new \DateTime('2023-01-01'))
+        ->getQuery()
+        ->getResult();
+}
+
+public function listeBooks(BookRepository $bookRepository): Response
+{
+    $books = $bookRepository->findAll();
+
+    // Compter les livres de catégorie "Romance"
+    $romanceCount = 0;
+    foreach ($books as $book) {
+        if ($book->getCategory() === 'Romance') {
+            $romanceCount++;
+        }
+    }
+
+    return $this->render('book/liste.html.twig', [
+        'books' => $books,
+        'romanceCount' => $romanceCount,
+    ]);
+}
+   
 
 }

@@ -15,7 +15,6 @@
         font-weight: 600;
     }
 
-    /* Zone de recherche */
     .search-box {
         text-align: center;
         margin-bottom: 30px;
@@ -140,12 +139,19 @@
 </style>
 
 <h1>Liste des livres</h1>
+
+<!-- ✅ Ajout du nombre de livres Romance -->
+<div style="margin: 20px auto; background-color: #f8f4ff; padding: 15px; border-radius: 12px; text-align:center; box-shadow: 0 3px 8px rgba(150, 120, 200, 0.1); width: fit-content;">
+    <h2 style="color:#9370db;">💜 Nombre de livres de catégorie "Romance"</h2>
+    <p style="font-size:18px;">Il y a <strong>{{ romanceCount }}</strong> livre(s) dans la catégorie <em>Romance</em>.</p>
+</div>
+
 {% if sortedByAuthor is defined and sortedByAuthor %}
     <p style="text-align:center; color:#9370db; font-weight:500; margin-bottom:15px;">
         📖 Liste triée par auteur
     </p>
 {% endif %}
-<!-- .. Zone de recherche -->
+
 <div class="search-box">
     <form method="get" action="{{ path('liste_books') }}">
         <input type="text" name="ref" placeholder="🔍 Rechercher par référence..." value="{{ ref ?? '' }}">

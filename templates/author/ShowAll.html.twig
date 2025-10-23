@@ -80,6 +80,9 @@
         background-color: #b892ff;
         transform: scale(1.05);
     }
+
+    .btn-add { background-color: #5dade2; margin-top: 20px; }
+    .btn-add:hover { background-color: #3498db; transform: scale(1.03); }
 </style>
 
 <table>
@@ -98,5 +101,12 @@
       <a href="{{ path('updateAuthor', {'id': i.id}) }}">Update</a>
     </td>
   </tr>
+
   {% endfor %}
+    
 </table>
+<div style="text-align:center; margin-top:20px;">
+  <a href="{{ path('addForm') }}" class="btn btn-add">
+        ➕ Créer nouveau
+    </a>
+</div>

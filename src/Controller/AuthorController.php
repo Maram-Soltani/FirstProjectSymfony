@@ -122,4 +122,10 @@ public function ShowAllAuthorsQB(AuthorRepository $repo): Response
         'list' => $authors,
     ]);
 }
+
+    #[Route('/ShowAllAuthorsDQL', name:'ShowAl lAuthor sDQL' )]
+    public function ShowAllAuthorsDQL (AuthorRepository $repo): Response{
+            $authors=$repo->ShowAllAuthorsDQL();
+            return $this->render (view: 'author/showAll.html.twig', parameters: ['list'=>$authors]);
+    }
 }

@@ -168,12 +168,15 @@ public function listeBooks(Request $request, BookRepository $bookRepo): Response
     $countPublished = count(array_filter($books, fn($b) => $b->getPublished()));
     $countUnpublished = count(array_filter($books, fn($b) => !$b->getPublished()));
 
+    // ✅ Calculer romanceCount ici aussi
+    $romanceCount = count(array_filter($books, fn($b) => $b->getCategory() === 'Romance'));
     return $this->render('book/liste.html.twig', [
         'books' => $books,
         'countPublished' => $countPublished,
         'countUnpublished' => $countUnpublished,
         'ref' => $ref,
-    ]);
+    'romanceCount' => $romanceCount, // Ajouter 
+        ]);
 }
 
 #[Route('/books/by-author', name: 'books_by_author')]
@@ -187,6 +190,47 @@ public function booksByAuthor(BookRepository $bookRepo): Response
         'sortedByAuthor' => true,
     ]);
 }
+#[Route('/books/list', name: 'app_books_list')]
+    public function list(BookRepository $bookRepository): Response
+    {
+        $books = $bookRepository->findAll();
+        $romanceCount = 0;
+    foreach ($books as $book) {
+        if ($book->getCategory() === 'Romance') {
+            $romanceCount++;
+        }
+    }
 
+        return $this->render('book/liste.html.twig', [
+            'books' => $books,
+            'romanceCount' => $romanceCount,
+        ]);
+    }
+////
+ /*#[Route('/books/before2023', name: 'books_before_2023')]
+public function booksBefore2023(BookRepository $bookRepository): Response
+{
+    $books = $bookRepository->findBooksBefore2023WithAuthorHavingMoreThan10Books();
+
+    // Compteurs comme dans ton template principal :
+    $countPublished = 0;
+    $countUnpublished = 0;
+    foreach ($books as $book) {
+        if ($book->isPublished()) {
+            $countPublished++;
+        } else {
+            $countUnpublished++;
+        }
+    }
+
+    return $this->render('book/liste.html.twig', [
+        'books' => $books,
+        'countPublished' => $countPublished,
+        'countUnpublished' => $countUnpublished,
+    ]);
+}*/
+
+ // Compter les livres de catégorie "Romance"
+   
 
 }
