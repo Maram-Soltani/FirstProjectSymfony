@@ -95,6 +95,55 @@ public function listeBooks(BookRepository $bookRepository): Response
         'romanceCount' => $romanceCount,
     ]);
 }
-   
+public function countPublished(): int
+{
+    return $this->createQueryBuilder('b')
+        ->select('COUNT(b.id)')
+        ->where('b.published = :val')
+        ->setParameter('val', true)
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+public function countUnpublished(): int
+{
+    return $this->createQueryBuilder('b')
+        ->select('COUNT(b.id)')
+        ->where('b.published = :val')
+        ->setParameter('val', false)
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+public function countByCategory(string $category): int
+{
+    return $this->createQueryBuilder('b')
+        ->select('COUNT(b.id)')
+        ->where('b.category = :cat')
+        ->setParameter('cat', $category)
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+   public function findBooksBetweenDates($startDate, $endDate)
+{
+    return $this->createQueryBuilder('b')
+        ->where('b.publicationDate BETWEEN :start AND :end')
+        ->setParameter('start', $startDate)
+        ->setParameter('end', $endDate)
+        ->getQuery()
+        ->getResult();
+}
+
+
+public function findAuthorsByBookCountRange(int $min, int $max)
+{
+    return $this->createQueryBuilder('a')
+        ->where('a.nbBooks BETWEEN :min AND :max')
+        ->setParameter('min', $min)
+        ->setParameter('max', $max)
+        ->getQuery()
+        ->getResult();
+}
 
 }

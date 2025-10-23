@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use App\Service\HappyQuote;
 use App\Entity\Author;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
@@ -23,9 +23,10 @@ final class AuthorController extends AbstractController
     }
 
     #[Route('/ShowAll',name:'showAll')]
-    public function showAll(AuthorRepository $repo){
+    public function showAll(AuthorRepository $repo,HappyQuote $happyQuote){
      $authors=$repo->findAll();
-     return $this->render('author/showAll.html.twig',['list'=>$authors]);
+     $message = $happyQuote->getHappyMessage();
+     return $this->render('author/showAll.html.twig',['list'=>$authors,'message' => $message]);
     }
 
     #[Route('/add', name:'add')]
@@ -128,4 +129,41 @@ public function ShowAllAuthorsQB(AuthorRepository $repo): Response
             $authors=$repo->ShowAllAuthorsDQL();
             return $this->render (view: 'author/showAll.html.twig', parameters: ['list'=>$authors]);
     }
+
+  /*  #[Route('/authors/by-book-count', name: 'authors_by_book_count')]
+public function authorsByBookCount(Request $request, AuthorRepository $authorRepository): Response
+{
+    $min = $request->query->get('min');
+    $max = $request->query->get('max');
+
+    if (!$min || !$max) {
+        $this->addFlash('error', 'Veuillez renseigner les deux valeurs.');
+        return $this->redirectToRoute('liste_books'); // redirige vers liste des livres
+    }
+
+    $authors = $authorRepository->findAuthorsByBookCountRange($min, $max);
+
+    return $this->render('book/liste.html.twig', [
+        'authorsFiltered' => $authors,
+        'min' => $min,
+        'max' => $max,
+        'books' => $this->getDoctrine()->getRepository(Book::class)->findAll(),
+        'romanceCount' => $this->getDoctrine()->getRepository(Book::class)->countByCategory('Romance'),
+        'countPublished' => $this->getDoctrine()->getRepository(Book::class)->countPublished(),
+        'countUnpublished' => $this->getDoctrine()->getRepository(Book::class)->countUnpublished(),
+    ]);
+}*/
+
+#[Route('/authorrrr', name: 'author_list')]
+    public function list(AuthorRepository $repository, HappyQuote $happyQuote): Response
+    {
+        $authors = $repository->findAll();
+        $message = $happyQuote->getHappyMessage();
+
+        return $this->render('author/list.html.twig', [
+            'authors' => $authors,
+            'message' => $message,
+        ]);
+    }
+
 }

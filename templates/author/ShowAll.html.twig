@@ -86,6 +86,7 @@
 </style>
 
 <table>
+
   <tr>
     <td>Username</td>
     <td>Email</td>
@@ -102,9 +103,13 @@
     </td>
   </tr>
 
+
   {% endfor %}
     
 </table>
+<p style="color:green; font-weight:bold;">
+    {{ message }}
+</p>
 <div style="text-align:center; margin-top:20px;">
   <a href="{{ path('addForm') }}" class="btn btn-add">
         ➕ Créer nouveau

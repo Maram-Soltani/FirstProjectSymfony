@@ -140,12 +140,30 @@
 
 <h1>Liste des livres</h1>
 
-<!-- ✅ Ajout du nombre de livres Romance -->
+<!--  Ajout du nombre de livres Romance -->
 <div style="margin: 20px auto; background-color: #f8f4ff; padding: 15px; border-radius: 12px; text-align:center; box-shadow: 0 3px 8px rgba(150, 120, 200, 0.1); width: fit-content;">
     <h2 style="color:#9370db;">💜 Nombre de livres de catégorie "Romance"</h2>
     <p style="font-size:18px;">Il y a <strong>{{ romanceCount }}</strong> livre(s) dans la catégorie <em>Romance</em>.</p>
 </div>
 
+<!-- 🔹 Filtre par dates -->
+<div class="search-box" style="margin-bottom:15px;">
+    <form method="get" action="{{ path('books_between_dates') }}">
+        <input type="date" name="start" value="{{ startDate ?? '' }}" required>
+        <input type="date" name="end" value="{{ endDate ?? '' }}" required>
+        <button type="submit">📅 Filtrer par date</button>
+    </form>
+</div>
+{% if authorsFiltered is defined and authorsFiltered %}
+    <div style="margin:20px auto; text-align:center; background-color:#f8f4ff; padding:15px; border-radius:12px; width:fit-content; box-shadow:0 3px 8px rgba(150,120,200,0.1);">
+        <h2 style="color:#9370db;">Auteurs avec {{ min }} à {{ max }} livres</h2>
+        <ul style="list-style:none; padding:0; margin:0;">
+            {% for author in authorsFiltered %}
+                <li>{{ author.username }} ({{ author.nbBooks }} livres)</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
 {% if sortedByAuthor is defined and sortedByAuthor %}
     <p style="text-align:center; color:#9370db; font-weight:500; margin-bottom:15px;">
         📖 Liste triée par auteur

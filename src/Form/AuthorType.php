@@ -32,7 +32,27 @@ class AuthorType extends AbstractType
         $builder->add('save', SubmitType::class, [
             'label' => $options['is_edit'] ? 'Update' : 'Save',
             'attr' => ['class' => 'btn-submit mt-2']
-        ]);
+        ])
+
+        ->add('min', IntegerType::class, [
+                'required' => false,
+                'label' => 'Min Number',
+                'attr' => [
+                    'placeholder' => 'Min',
+                    'style' => 'width:100px; margin-right:10px;'
+                ],
+            ])
+            ->add('max', IntegerType::class, [
+                'required' => false,
+                'label' => 'Max Number',
+                'attr' => [
+                    'placeholder' => 'Max',
+                    'style' => 'width:100px; margin-right:10px;'
+                ],
+            ]);
+
+
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void

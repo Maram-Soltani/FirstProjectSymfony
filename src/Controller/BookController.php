@@ -168,7 +168,7 @@ public function listeBooks(Request $request, BookRepository $bookRepo): Response
     $countPublished = count(array_filter($books, fn($b) => $b->getPublished()));
     $countUnpublished = count(array_filter($books, fn($b) => !$b->getPublished()));
 
-    // ✅ Calculer romanceCount ici aussi
+    // Calculer romanceCount ici aussi
     $romanceCount = count(array_filter($books, fn($b) => $b->getCategory() === 'Romance'));
     return $this->render('book/liste.html.twig', [
         'books' => $books,
@@ -230,7 +230,30 @@ public function booksBefore2023(BookRepository $bookRepository): Response
     ]);
 }*/
 
- // Compter les livres de catégorie "Romance"
-   
+  #[Route('/books/between-dates', name: 'books_between_dates')]
+public function booksBetweenDates(Request $request, BookRepository $bookRepository): Response
+{
+    $startDate = $request->query->get('start');
+    $endDate = $request->query->get('end');
+
+    if (!$startDate || !$endDate) {
+        $this->addFlash('error', 'Veuillez fournir les deux dates.');
+        return $this->redirectToRoute('liste_books'); // page principale
+    }
+
+    $books = $bookRepository->findBooksBetweenDates($startDate, $endDate);
+
+    return $this->render('book/liste.html.twig', [
+        'books' => $books,
+        'startDate' => $startDate,
+        'endDate' => $endDate,
+        'romanceCount' => $bookRepository->countByCategory('Romance'),
+        'countPublished' => $bookRepository->countPublished(),
+        'countUnpublished' => $bookRepository->countUnpublished(),
+    ]);
+}
+
+
+
 
 }
